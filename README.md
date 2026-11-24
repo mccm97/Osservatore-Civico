@@ -46,16 +46,16 @@ Ogni indicatore mostrato nell'interfaccia dichiara la fonte primaria, l'anno di 
 
 ### Installazione e avvio
 ```bash
-npm install
-npm run dev
+bun install   # oppure: npm install
+bun run dev   # oppure: npm run dev
 ```
 L'applicazione sarà disponibile su `http://localhost:3000`.
 
 ### Build di produzione
 ```bash
-npm run lint
-npm run build
-npm start
+bun run lint
+bun run build
+bun run start
 ```
 
 ### Rigenerazione manuale del dataset ufficiale
@@ -68,8 +68,8 @@ npm run fetch-data
 
 ## Automazione GitHub Actions
 
-- **`.github/workflows/ci.yml`**: verifica automaticamente `npm run lint` e `npm run build` ad ogni push e Pull Request su `main`.
-- **`.github/workflows/update-data.yml`**: workflow pianificato mensilmente (e avviabile manualmente tramite *Run workflow*) che riesegue `scripts/fetch_real_data.py`, verifica build e TypeScript e apre una Pull Request solo se rileva nuovi dati ufficiali.
+- **`.github/workflows/ci.yml`**: verifica automaticamente `bun run lint` e `bun run build` ad ogni push e Pull Request su `main` / `master`.
+- **`.github/workflows/update-data.yml`**: workflow pianificato mensilmente (e avviabile manualmente tramite *Run workflow*) che riesegue `scripts/fetch_real_data.py`, verifica build e TypeScript e apre una Pull Request solo se rileva nuovi dati ufficiali. *(Su GitHub assicurati che in **Settings → Actions → General → Workflow permissions** sia attiva l'opzione **Allow GitHub Actions to create and approve pull requests**).*
 
 ---
 
