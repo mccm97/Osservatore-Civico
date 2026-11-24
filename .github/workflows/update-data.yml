@@ -1,0 +1,53 @@
+name: Aggiorna Dataset Ufficiali
+
+on:
+  schedule:
+    # Esegue il controllo mensile il giorno 15 alle 06:00 UTC
+    - cron: '0 6 15 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh-official-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Scarica e aggrega dataset ufficiali (ISTAT, MEF, QDV)
+        run: python3 scripts/fetch_real_data.py
+
+      - name: Verifica build e TypeScript con dataset aggiornato
+        run: |
+          npm ci
+          npm run lint
+          npm run build
+
+      - name: Apri Pull Request se il dataset è cambiato
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'chore(data): aggiorna snapshot dataset ufficiali'
+          title: 'Aggiornamento automatico dataset ufficiali (ISTAT / MEF / QDV)'
+          body: |
+            Questa Pull Request è stata generata automaticamente dal workflow `Aggiorna Dataset Ufficiali`.
+
+            Prima del merge verificare:
+            - Eventuali nuove colonne o variazioni negli anni di riferimento MEF / QDV
+            - Esito positivo di `npm run lint` e `npm run build`
+          branch: chore/update-official-dataset
+          delete-branch: true

@@ -1,0 +1,6 @@
+{
+  "name": "Osservatorio Civico Italia",
+  "description": "Piattaforma interattiva per il confronto testa a testa delle performance economiche, finanziarie, qualitative, sociali e ambientali dei comuni e delle città italiane con dati live.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
